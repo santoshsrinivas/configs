@@ -1,0 +1,46 @@
+[
+		// Move out of common paired characters () and [] with `Tab`
+	// {
+	// 	"keys": ["tab"],
+	// 	"command": "move",
+	// 	"args": {"by": "characters", "forward": true},
+	// 	"context": [
+	// 		// Check if next char matches (followed by anything)
+	// 		{ "key": "following_text", "operator": "regex_match", "operand": "(:?`|\\)|\\]|\\}).*", "match_all": true },
+	// 		// ...and that there is a paid character before it on the same
+	// 		// line. This lets you `tab` to Indent at lines with single ]s
+	// 		// still, like in a JSOn file
+	// 		{ "key": "preceding_text", "operator": "regex_contains", "operand": "(:?`|\\(|\\[|\\{)", "match_all": true }
+	// 	]
+	// },
+
+	// Move out of single and double quotes with `Tab`
+	{
+		"keys": ["tab"],
+		"command": "move",
+		"args": {"by": "characters", "forward": true},
+		"context": [
+			{ "key": "following_text", "operator": "regex_match", "operand": "(?:\"|').*", "match_all": true },
+
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "(?:\"|')", "match_all": true }
+		]
+	},
+	// type j and k quickly to come to normal mode 
+	{ 
+		"keys": ["j", "k"], 
+		"command": "exit_insert_mode",
+    	"context":
+    		[
+        		{ "key": "setting.command_mode", "operand": false },
+        		{ "key": "setting.is_widget", "operand": false }
+    		]
+	},
+
+	// semi-colon in normal mode brings up command pallete
+	// also works for saving the file with just ;e 
+	{ "keys": [";"], 
+		"command": "show_overlay", 
+		"args": {"overlay": "command_palette", "text": ":"},
+    "context": [{"key": "setting.command_mode"}]
+  }
+]
